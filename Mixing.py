@@ -31,10 +31,11 @@ class Player():
     def getPosY(self):
         return self.posY
     def getAvaliableDir(self):
+        self.avaliableDirections=[]
         for x in range(len(self.bound)):
             for y in range(len(self.bound)):
                 if(self.bound[x][y]!=0):
-                    self.avaliableDirections.append(cordanates[x][y])
+                    self.avaliableDirections.extend(cordanates[x][y])
         return self.avaliableDirections
 
     def getMap(self):
@@ -53,3 +54,4 @@ print("y: "+ str(p.posY))
 prettyPrint(p.bound)
 prettyPrint(p.getMap())
 print(p.getAvaliableDir())
+
