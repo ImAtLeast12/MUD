@@ -1,4 +1,5 @@
-cordanates = [["NW"],["N"],["NE"]],[["W"],["P"],["E"]],[["SW"],["S"],["SE"]]
+cordanates = [['NW'],['N'],['NE']],[['W'],['P'],['E']],[['SW'],['S'],['SE']]
+
 def regenerate2d(length,width):
     m=[]
     for x in range(length):
@@ -64,6 +65,9 @@ m.addPerimiter() # give the map a perimeter
 p=Player(m) # give the player a copy of the map
 
 for x in range(5): #Testing for 5 directions
+    print('(' + str(p.posX) + ',' + str(p.posY) + ')')
+    prettyPrint(p.Map.getBound(p.posX,p.posY))
+    print(p.getAvaliableDir())
     Dir = input('Where would you like to go?')
     if (Dir in p.getAvaliableDir()):
         #Then find what direction they need to go
@@ -75,6 +79,5 @@ for x in range(5): #Testing for 5 directions
             p.posY-=1
         if('E' in Dir):
             p.posY+=1
-    print('(' + str(p.posX) + ',' + str(p.posY) + ')')
-    print(p.getAvaliableDir())
-    prettyPrint(p.bound)
+    else:
+        input('You cann\'t go there')
