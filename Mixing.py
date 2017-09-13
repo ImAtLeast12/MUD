@@ -1,4 +1,7 @@
 cordanates = [['NW'],['N'],['NE']],[['W'],['P'],['E']],[['SW'],['S'],['SE']]
+food={ 0:['Steak','A good slab of meat.', 100],
+       1:['Rice','A bowl of the finest rice.', 20] 
+      }#this can be added indefinatly
 
 def regenerate2d(length,width):
     m=[]
@@ -13,9 +16,9 @@ def prettyPrint(arr):
 
 class Map():
     def __init__(self):
-        self.Map=   [[1, 2, 3, 4],
-                    [5, 6, 7, 8],
-                    [9, 10, 11, 12 ]]
+        self.Map=   [[1,  2,  3,  4],
+                     [5,  6,  7,  8],
+                     [9, 10, 11, 12]]
         
     def getBound(self,px,py):
         bound=[[0,0,0],[0,0,0],[0,0,0]]
@@ -24,6 +27,7 @@ class Map():
                 bound[x][y]=self.Map[px-1+x][py-1+y]
         bound[1][1]=0 #I want bound  to ignore the players position when I get the directions avalible
         return bound
+    
     def addPerimiter(self):
         x=len(self.Map)
         y=len(self.Map[0])
@@ -64,7 +68,7 @@ m=Map() #generate a map some how
 m.addPerimiter() # give the map a perimeter
 p=Player(m) # give the player a copy of the map
 
-for x in range(5): #Testing for 5 directions
+'''for x in range(5): #Testing for 5 directions
     print('(' + str(p.posX) + ',' + str(p.posY) + ')')
     prettyPrint(p.Map.getBound(p.posX,p.posY))
     print(p.getAvaliableDir())
@@ -80,4 +84,4 @@ for x in range(5): #Testing for 5 directions
         if('E' in Dir):
             p.posY+=1
     else:
-        input('You cann\'t go there')
+        input('You cann\'t go there')'''
