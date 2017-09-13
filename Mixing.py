@@ -1,4 +1,14 @@
 cordanates = [["NW"],["N"],["NE"]],[["W"],["P"],["E"]],[["SW"],["S"],["SE"]]
+def regenerate2d(length,width):
+    m=[]
+    for x in range(length):
+        m.append([0]*width)
+    return m
+
+def prettyPrint(arr):
+    for x in range(len(arr)):
+        print(arr[x])
+    print()
 
 class Map():
     def __init__(self):
@@ -15,8 +25,18 @@ class Map():
                 bound[x][y]=self.Map[px-1+x][py-1+y]
         bound[1][1]=0 #I want bound  to ignore the players position when I get the directions avalible
         return bound
+    def addPerimiter(self):
+        x=len(self.Map)
+        y=len(self.Map[0])
+        newMap = regenerate2d(x+2,y+2)
+        for x in range(len(self.Map)):
+            for y in range(len(self.Map[0])):
+                newMap[1+x][1+y]=self.Map[x][y]
+        prettyPrint(newMap)
+        self.Map = newMap
 
-    
+            
+
 class Player():
     def __init__(self,Map):
         self.posX=1
@@ -40,14 +60,14 @@ class Player():
 
     def getMap(self):
         return self.Map.Map
-    
-def prettyPrint(arr):
-    for x in range(len(arr)):
-        print(arr[x])
-    print()
 
 m=Map()
 p=Player(m)
+
+
+m.addPerimiter()
+
+
 
 print("x: "+ str(p.posX))
 print("y: "+ str(p.posY))
