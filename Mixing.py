@@ -12,11 +12,9 @@ def prettyPrint(arr):
 
 class Map():
     def __init__(self):
-        self.Map=   [[0, 0, 0, 0, 0],
-                    [0, 1, 2, 3, 0],
-                    [0, 4, 5, 6, 0],
-                    [0, 7, 8, 9, 0],
-                    [0, 0, 0, 0, 0]]
+        self.Map=   [[1, 2, 3, 4],
+                    [5, 6, 7, 8],
+                    [9, 10, 11, 12 ]]
         
     def getBound(self,px,py):
         bound=[[0,0,0],[0,0,0],[0,0,0]]
@@ -49,6 +47,8 @@ class Player():
     def getPosY(self):
         return self.posY
     def getAvaliableDir(self):
+        self.bound = self.Map.getBound(self.posX,self.posY)
+        
         self.avaliableDirections=[]
         for x in range(len(self.bound)):
             for y in range(len(self.bound)):
@@ -59,18 +59,22 @@ class Player():
     def getMap(self):
         return self.Map.Map
 
-m=Map()
-p=Player(m)
+m=Map() #generate a map some how
+m.addPerimiter() # give the map a perimeter
+p=Player(m) # give the player a copy of the map
 
-m.addPerimiter()
-
-print("x: "+ str(p.posX))
-print("y: "+ str(p.posY))
-prettyPrint(p.bound)
-prettyPrint(p.getMap())
-print(p.getAvaliableDir())
-
-for x in range(2):
+for x in range(5): #Testing for 5 directions
     Dir = input('Where would you like to go?')
     if (Dir in p.getAvaliableDir()):
-        print('all good')
+        #Then find what direction they need to go
+        if('N' in Dir):
+            p.posX-=1
+        if('S' in Dir):
+            p.posX+=1
+        if('W' in Dir):
+            p.posY-=1
+        if('E' in Dir):
+            p.posY+=1
+    print('(' + str(p.posX) + ',' + str(p.posY) + ')')
+    print(p.getAvaliableDir())
+    prettyPrint(p.bound)
