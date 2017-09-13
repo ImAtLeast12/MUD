@@ -33,9 +33,7 @@ class Map():
             for y in range(len(self.Map[0])):
                 newMap[1+x][1+y]=self.Map[x][y]
         prettyPrint(newMap)
-        self.Map = newMap
-
-            
+        self.Map = newMap          
 
 class Player():
     def __init__(self,Map):
@@ -64,10 +62,7 @@ class Player():
 m=Map()
 p=Player(m)
 
-
 m.addPerimiter()
-
-
 
 print("x: "+ str(p.posX))
 print("y: "+ str(p.posY))
@@ -75,3 +70,7 @@ prettyPrint(p.bound)
 prettyPrint(p.getMap())
 print(p.getAvaliableDir())
 
+for x in range(2):
+    Dir = input('Where would you like to go?')
+    if (Dir in p.getAvaliableDir()):
+        print('all good')
