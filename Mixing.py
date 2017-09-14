@@ -85,3 +85,33 @@ p=Player(m) # give the player a copy of the map
             p.posY+=1
     else:
         input('You cann\'t go there')'''
+
+
+attack ={0:["Test",10,1.0],
+         1:["Tes2",20,2.0],
+         }
+
+import time
+
+class Attack():
+    def __init__(self,a):
+        self.name   = a[0]
+        self.damage = a[1]
+        self.coolDownPeriod = a[2]
+        self.cdpLeft= 0.0
+        
+    def canAttack(self):
+        return self.cdpLeft<=0
+
+    def attacked(self):
+        t0=time.time()
+        while (True):
+            if not(time.time()-t0<3):
+                print(time.time()-t0)
+                break
+
+a = Attack(attack[0])
+a.attacked()
+            
+
+    
