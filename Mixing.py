@@ -87,10 +87,10 @@ p=Player(m) # give the player a copy of the map
         input('You cann\'t go there')'''
 
 
-attack ={0:["Test",10,3.0],
-         1:["Tes2",20,3.0],
+attack ={0:["1",10,3.0],
+         1:["2",20,3.0],
          }
-
+dicAttacks={'1':Attack(attack[0]), '2':Attack(attack[1])}
 import time
 
 class Attack():
@@ -106,16 +106,15 @@ class Attack():
     def attacked(self):
         self.cdpLeft=time.time()
 
-dicAb={'a':Attack(attack[0]), 'b':Attack(attack[1])}
-
 while(True):        
-    for i in range(len(dicAb)):
+    for i in range(len(dicAttacks)):
         x=input()
-        if(x in dicAb):
-            if(dicAb[x].canAttack()):
-                dicAb[x].attacked()
-                print(x +' attacked')
-                x=''
+        if(x in dicAttacks):
+            if(dicAttacks[x].canAttack()):
+                dicAttacks[x].attacked()
+                print(x + ' attacked')
             else:
-                print('can\'t attack yet')
-    
+                print(x + ' can\'t attack yet')
+        else:
+            print('invalid comand')
+                
