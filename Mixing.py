@@ -47,6 +47,7 @@ class Player():
         self.bound=self.Map.getBound(self.posX,self.posY)
         self.avaliableDirections=[]
         
+        self.damage=5
         self.health = 10
         self.deathText = "It was a bitter sweet end (dramatic pause) alais."
         
@@ -67,8 +68,8 @@ class Player():
     def getMap(self):
         return self.Map.Map
 
-    def attacks(self,e):
-        e.health -= 100
+    def attacks(self,e,d):
+        e.health -= d
 
     def isAlive(self):
         return self.health > 0
@@ -135,15 +136,17 @@ class Enemmy():
         print(self.deathText)
         if self.health < 0:
             del self
-    def attacks(self, p):
-        p.health-=100
+    def attacks(self, p,d):
+        p.health-=d
 
 p = Player(m)
 e = Enemmy(Attack(attack[0]))
 
 
-p.attacks(e)
-e.attacks(p)
+
+#e.attacks(p)
+#the ennemy attacking the player
+#the player attacking the ennemy
 
 
 if not (e.isAlive()):
@@ -154,13 +157,16 @@ if not (p.isAlive()):
 
 
     
-while(True):        
+while(e.isAlive()):        # rewrite the loop for the player
     for i in range(len(dicAttacks)):
         x=input()
         if(x in dicAttacks):
             if(dicAttacks[x].canAttack()):
                 dicAttacks[x].attacked()
-                print(x + ' attacked')
+                p.attacks(e,p.damage)
+                if not (e.isAlive()):
+                    e.kill()
+                    break
             else:
                 print(x + ' can\'t attack yet')
         else:
