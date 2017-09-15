@@ -106,20 +106,16 @@ class Attack():
     def attacked(self):
         self.cdpLeft=time.time()
 
-a = Attack(attack[0])
-b = Attack(attack[1])
-
-ab=[a,b]
-strAb=['a','b']
+dicAb={'a':Attack(attack[0]), 'b':Attack(attack[1])}
 
 while(True):        
-    x=input()
-    for i in range(len(strAb)):
-        if(x==strAb[i]):
-            x=''
-            if(ab[i].canAttack()):
-                ab[i].attacked()
-                print('a attacked')
+    for i in range(len(dicAb)):
+        x=input()
+        if(x in dicAb):
+            if(dicAb[x].canAttack()):
+                dicAb[x].attacked()
+                print(x +' attacked')
+                x=''
             else:
                 print('can\'t attack yet')
     
