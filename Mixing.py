@@ -38,50 +38,10 @@ class Map():
         prettyPrint(newMap)
         self.Map = newMap          
 
-class Player():
-    def __init__(self,Map):
-        self.posX=1
-        self.posY=1
-
-        self.Map=Map
-        self.bound=self.Map.getBound(self.posX,self.posY)
-        self.avaliableDirections=[]
-        
-        self.damage=5
-        self.health = 10
-        self.deathText = "It was a bitter sweet end (dramatic pause) alais."
-        
-    def getPosX(self):
-        return self.posX
-    def getPosY(self):
-        return self.posY
-    def getAvaliableDir(self):
-        self.bound = self.Map.getBound(self.posX,self.posY)
-        
-        self.avaliableDirections=[]
-        for x in range(len(self.bound)):
-            for y in range(len(self.bound)):
-                if(self.bound[x][y]!=0):
-                    self.avaliableDirections.extend(cordanates[x][y])
-        return self.avaliableDirections
-
-    def getMap(self):
-        return self.Map.Map
-
-    def attacks(self,e,d):
-        e.health -= d
-
-    def isAlive(self):
-        return self.health > 0
-
-    def kill(self):
-        print(self.deathText)
-        if self.health < 0:
-            del self
 
 m=Map() #generate a map some how
 m.addPerimiter() # give the map a perimeter
-p=Player(m) # give the player a copy of the map
+#p=Player(m) # give the player a copy of the map
 
 '''for x in range(5): #Testing for 5 directions
     print('(' + str(p.posX) + ',' + str(p.posY) + ')')
@@ -102,9 +62,7 @@ p=Player(m) # give the player a copy of the map
         input('You cann\'t go there')'''
 
 
-attack ={0:["Test",10,3.0],
-         1:["Tes2",20,3.0],
-         }
+
 
 import time
 
@@ -121,7 +79,48 @@ class Attack():
     def attacked(self):
         self.cdpLeft=time.time()
 
-dicAttacks={'1':Attack(attack[0]), '2':Attack(attack[1])}
+class Player():
+    def __init__(self,Map,a):
+        self.posX=1
+        self.posY=1
+
+        self.Map=Map
+        self.bound=self.Map.getBound(self.posX,self.posY)
+        self.avaliableDirections=[]
+        
+        self.damage=5
+        self.health = 10
+        self.deathText = "It was a bitter sweet end (dramatic pause) alais."
+        self.attacks = a
+        
+    def getPosX(self):
+        return self.posX
+    def getPosY(self):
+        return self.posY
+    def getAvaliableDir(self):
+        self.bound = self.Map.getBound(self.posX,self.posY)
+        
+        self.avaliableDirections=[]
+        for x in range(len(self.bound)):
+            for y in range(len(self.bound)):
+                if(self.bound[x][y]!=0):
+                    self.avaliableDirections.extend(cordanates[x][y])
+        return self.avaliableDirections
+
+    def getMap(self):
+        return self.Map.Map
+
+    def attackS(self,e,d):
+        e.health -= d
+
+    def isAlive(self):
+        return self.health > 0
+
+    def kill(self):
+        print(self.deathText)
+        if self.health < 0:
+            del self
+
 
 class Enemmy():
     def __init__(self,a):
@@ -139,7 +138,16 @@ class Enemmy():
     def attacks(self, p,d):
         p.health-=d
 
-p = Player(m)
+attack ={0:["Test",5,3.0],
+         1:["Tes2",2,3.0],
+         2:["Tes3",3,3.0],
+         }
+
+dicAttacks={'1':Attack(attack[0]),
+            '2':Attack(attack[1]),
+            '3':Attack(attack[2]),}
+
+p = Player(m,dicAttacks)
 e = Enemmy(Attack(attack[0]))
 
 
@@ -149,21 +157,17 @@ e = Enemmy(Attack(attack[0]))
 #the player attacking the ennemy
 
 
-if not (e.isAlive()):
-    e.kill()
 
-if not (p.isAlive()):
-    p.kill()
 
 
     
 while(e.isAlive()):        # rewrite the loop for the player
     for i in range(len(dicAttacks)):
         x=input()
-        if(x in dicAttacks):
-            if(dicAttacks[x].canAttack()):
-                dicAttacks[x].attacked()
-                p.attacks(e,p.damage)
+        if(x in p.attacks):
+            if(p.attacks[x].canAttack()):
+                p.attacks[x].attacked()
+                p.attackS(e,p.attacks[x].damage)
                 if not (e.isAlive()):
                     e.kill()
                     break
