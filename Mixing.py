@@ -47,6 +47,9 @@ class Player():
         self.bound=self.Map.getBound(self.posX,self.posY)
         self.avaliableDirections=[]
         
+        self.health = 10
+        self.deathText = "It was a bitter sweet end (dramatic pause) alais."
+        
     def getPosX(self):
         return self.posX
     def getPosY(self):
@@ -63,6 +66,17 @@ class Player():
 
     def getMap(self):
         return self.Map.Map
+
+    def attacks(self,e):
+        e.health -= 100
+
+    def isAlive(self):
+        return self.health > 0
+
+    def kill(self):
+        print(self.deathText)
+        if self.health < 0:
+            del self
 
 m=Map() #generate a map some how
 m.addPerimiter() # give the map a perimeter
@@ -87,10 +101,10 @@ p=Player(m) # give the player a copy of the map
         input('You cann\'t go there')'''
 
 
-attack ={0:["1",10,3.0],
-         1:["2",20,3.0],
+attack ={0:["Test",10,3.0],
+         1:["Tes2",20,3.0],
          }
-dicAttacks={'1':Attack(attack[0]), '2':Attack(attack[1])}
+
 import time
 
 class Attack():
@@ -106,6 +120,40 @@ class Attack():
     def attacked(self):
         self.cdpLeft=time.time()
 
+dicAttacks={'1':Attack(attack[0]), '2':Attack(attack[1])}
+
+class Enemmy():
+    def __init__(self,a):
+        self.damage = a
+        self.health = 10
+        self.deathText = "It was a bitter sweet end (dramatic pause) alais."
+
+    def isAlive(self):
+        return self.health > 0
+
+    def kill(self):
+        print(self.deathText)
+        if self.health < 0:
+            del self
+    def attacks(self, p):
+        p.health-=100
+
+p = Player(m)
+e = Enemmy(Attack(attack[0]))
+
+
+p.attacks(e)
+e.attacks(p)
+
+
+if not (e.isAlive()):
+    e.kill()
+
+if not (p.isAlive()):
+    p.kill()
+
+
+    
 while(True):        
     for i in range(len(dicAttacks)):
         x=input()
